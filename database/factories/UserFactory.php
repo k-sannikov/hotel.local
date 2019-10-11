@@ -21,7 +21,35 @@ $factory->define(User::class, function (Faker $faker) {
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        'password' => bcrypt('password'),
+        'role' => 'user',
         'remember_token' => Str::random(10),
     ];
 });
+
+/**
+ * Состояние для учетной записи Администратора
+ */
+$factory->state(User::class, 'admin', [
+    'email' => 'admin@test.com',
+    'password' => bcrypt('password'),
+    'role' => 'admin'
+]);
+
+/**
+ * Состояние для учетной записи Пользователя1
+ */
+$factory->state(User::class, 'user1', [
+    'email' => 'user1@test.com',
+    'password' => bcrypt('password'),
+    'role' => 'user'
+]);
+
+/**
+ * Состояние для учетной записи Пользователя2
+ */
+$factory->state(User::class, 'user2', [
+    'email' => 'user2@test.com',
+    'password' => bcrypt('password'),
+    'role' => 'user'
+]);
