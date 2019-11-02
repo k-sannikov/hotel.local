@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class Order extends Model
 {
@@ -16,8 +17,8 @@ class Order extends Model
      */
     protected $fillable = [
         'guest_name',
-        'series_passport',
-        'number_passport',
+        'passport_series',
+        'passport_number',
         'phone_number',
         'hotel_name',
         'date_of_arrival',
@@ -34,4 +35,28 @@ class Order extends Model
     protected $casts = [
         'amenities' => 'array'
     ];
+
+    /**
+     * Дата прибытия в формате "4 окт 2019 г."
+     */
+    public function getArrivalAttribute()
+    {
+        $date = new Carbon;
+        $date->locale('ru');
+        $dateArrival = $date->parse($this->date_of_arrival)->isoFormat('D MMM Y г.');
+
+        return $dateArrival;
+    }
+
+    /**
+     * Дата выселения в формате "4 окт 2019 г."
+     */
+    public function getDepartureAttribute()
+    {
+        $date = new Carbon;
+        $date->locale('ru');
+        $dateDeparture = $date->parse($this->date_of_departure)->isoFormat('D MMM Y г.');
+
+        return $dateDeparture;
+    }
 }

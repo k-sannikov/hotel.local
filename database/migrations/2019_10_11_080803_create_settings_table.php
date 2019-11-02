@@ -19,6 +19,7 @@ class CreateSettingsTable extends Migration
             $table->string('element_name');
             $table->string('value');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
