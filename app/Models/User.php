@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role',
     ];
 
     /**
@@ -36,4 +36,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Должность на русском языке
+     */
+    public function getPositionAttribute()
+    {
+        switch ($this->role) {
+            case 'admin':
+                $position = 'Администратор';
+                break;
+
+            case 'user':
+                $position = 'Управляющий отеля';
+                break;
+        }
+
+        return $position;
+    }
 }
